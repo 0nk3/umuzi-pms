@@ -29,8 +29,16 @@
         <th>Value</th>
         <th>Rating</th>
       </tr>
-
-      <tbody></tbody>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td></td>
+          <td>{{ product.productName }}</td>
+          <td>{{ product.productCode }}</td>
+          <td>{{ product.releaseDate }}</td>
+          <td>R{{ product.price }}</td>
+          <td>{{ product.starRating }}</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </div>
