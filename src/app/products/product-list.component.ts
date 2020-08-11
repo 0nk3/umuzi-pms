@@ -6,6 +6,9 @@ import { Component } from '@angular/core';
 })
 export class ProductListComponent {
   pageTitle = 'Product List';
+  imageWidth = 50;
+  imageMargin = 2;
+  showImage = false;
   products: any[] = [
     {
       productId: 2,
@@ -66,6 +69,9 @@ export class ProductListComponent {
       price: 600,
       starRating: 1.5,
       imageURL: 'assets/images/table.jpg',
-    },
+    }
   ];
+  toggleImage(): void{
+    this.showImage = !this.showImage;
+  }
 }
