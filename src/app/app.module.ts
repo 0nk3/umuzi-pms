@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -7,15 +8,8 @@ import { ProductListComponent } from './products/product-list.component';
 import { StarComponent } from './shared/star.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ProductListComponent,
-    StarComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule
-  ],
-  bootstrap: [AppComponent]
+  declarations: [AppComponent, ProductListComponent, StarComponent],
+  imports: [BrowserModule, FormsModule, HttpClientModule],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

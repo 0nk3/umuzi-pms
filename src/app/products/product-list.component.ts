@@ -16,12 +16,16 @@ export class ProductListComponent implements OnInit {
   showImage = false;
   listFilter = 'computer';
   products: IProduct[] = [];
+  errorMessage: string;
   toggleImage(): void {
     this.showImage = !this.showImage;
   }
   // life cycle hook
   ngOnInit(): void {
-    this.products = this.productService.getProducts();
+    this.productService.getProducts().subscribe({
+      next: (products) => (this.products = products),
+      error: (err) => (this.errorMessage = err),
+    });
     console.log('On Init . . .');
   }
 }

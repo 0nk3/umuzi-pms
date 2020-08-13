@@ -1,4 +1,7 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 import { IProduct } from './product';
 
@@ -6,68 +9,25 @@ import { IProduct } from './product';
   providedIn: 'root',
 })
 export class ProductService {
-  getProducts(): IProduct[] {
-    return [
-      {
-        productId: 2,
-        productName: 'Computer Keyboard',
-        productCode: 'KYB - 00123',
-        releaseDate: '11 August 2019',
-        description: 'Old School Machanical Keyboard',
-        price: 200,
-        starRating: 3.5,
-        imageURL: 'assets/images/keyboard.jpeg',
-      },
-      {
-        productId: 3,
-        productName: 'Computer Mouse',
-        productCode: 'CMS - 003',
-        releaseDate: '20 August 2001',
-        description: 'Standard Computer Mouse',
-        price: 120,
-        starRating: 3,
-        imageURL: 'assets/images/mouse.jpg',
-      },
-      {
-        productId: 5,
-        productName: 'Dell Computer Tower',
-        productCode: 'CTW - 005',
-        releaseDate: '21 August 1995',
-        description: 'Standard Dell Mini Tower',
-        price: 1800,
-        starRating: 4,
-        imageURL: 'assets/images/tower.jpg',
-      },
-      {
-        productId: 7,
-        productName: 'RJ-45 Cable',
-        productCode: 'CBL - 007',
-        releaseDate: '20 August 2003',
-        description: 'Standard RJ-45 Internet Cable',
-        price: 33,
-        starRating: 5,
-        imageURL: 'assets/images/rj45.jpg',
-      },
-      {
-        productId: 11,
-        productName: 'Computer Monitor',
-        productCode: 'CMN - 00123',
-        releaseDate: '20 August 2008',
-        description: 'Samsung Computer Monitor',
-        price: 1350,
-        starRating: 4.5,
-        imageURL: 'assets/images/screen.jpg',
-      },
-      {
-        productId: 13,
-        productName: 'Table',
-        productCode: 'TBL - 00123',
-        releaseDate: '20 August 2001',
-        description: 'Standard Table',
-        price: 600,
-        starRating: 1.5,
-        imageURL: 'assets/images/table.jpg',
-      },
-    ];
+  private productUrl = 'api/products/products.json';
+  constructor(private http: HttpClient) {}
+
+  getProducts(): Observable<IProduct[]> {
+    return this.http.get<IProduct[]>(this.productUrl).pipe(
+      tap((data) => console.log('All : ' + JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+  }
+  private handleError(err: HttpErrorResponse) {
+    // This must be change to a logging framework rather than
+    // just logging to console
+    let errorMessage = '';
+    if (err.error instanceof Error) {
+      errorMessage = `An error occured: ${err.error.message}`;
+    } else {
+      errorMessage = `Server returned code ${err.status}, error message is : ${err.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
   }
 }
